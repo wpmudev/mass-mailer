@@ -1,0 +1,7 @@
+CREATE TABLE wp_mass_mailer (
+email_ID bigint(20) unsigned NOT NULL auto_increment,
+email_user_id VARCHAR(255),
+email_optout VARCHAR(255) NOT NULL default 'yes',
+email_status VARCHAR(255) NOT NULL default 'no',
+PRIMARY KEY  (email_ID)
+);"NT=1 ;

@@ -1,0 +1,12 @@
+Plugin Name: Mass Mailer
+Author: Andrew Billits
+
+Files:
+----------------------------------------------------------------------
+mass-mailer.php - goes in /wp-content/mu-plugins
+
+Instructions:
+----------------------------------------------------------------------
+1) Place the files in the specified directories
+2) Visit the plugin page under the site admin - the auto-installer will attempt to install the plugin
+3) If the auto-install does not add the db table(s) for you then run the sql code in "sql.txt" on your wpmu db
