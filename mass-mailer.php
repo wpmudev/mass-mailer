@@ -26,6 +26,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+define('MASS_MAILER_VERSION', '1.6.3');
+define('MASS_MAILER_LANG_DOMAIN', 'mass-mailer');
+
 //------------------------------------------------------------------------//
 //---Hook-----------------------------------------------------------------//
 //------------------------------------------------------------------------//
@@ -38,6 +41,7 @@ if (get_site_option( "mass_mailer_installed" ) == "yes") {
 	mass_mailer_user_install();
 }
 
+add_action('init', 'mass_mailer_init');
 add_action('admin_menu', 'mass_mailer_plug_pages');
 add_action('wp_head', 'mass_mailer_unsubscribe');
 if ( $user_types_display_profile_option == 'yes' ) {
@@ -49,27 +53,36 @@ add_filter('wp_redirect', 'mass_mailer_profile_process', 1, 1);
 //------------------------------------------------------------------------//
 //---Functions------------------------------------------------------------//
 //------------------------------------------------------------------------//
+function mass_mailer_init() {
+	if (preg_match('/mu\-plugin/', __FILE__) > 0) {
+		load_muplugin_textdomain(MASS_MAILER_LANG_DOMAIN, dirname(plugin_basename(__FILE__)).'/massmailerincludes/languages');
+	} else {
+		load_plugin_textdomain(MASS_MAILER_LANG_DOMAIN, false, dirname(plugin_basename(__FILE__)).'/massmailerincludes/languages');
+	}
+}
+
 function mass_mailer_upgrade() {
 	global $wpdb;
 	if (get_site_option( "mass_mailer_version" ) == '') {
 		add_site_option( 'mass_mailer_version', '0.0.0' );
 	}
 	
-	if (get_site_option( "mass_mailer_version" ) == "1.6.0") {
+	if (get_site_option( "mass_mailer_version" ) == MASS_MAILER_VERSION) {
 		// do nothing
 	} else {
 		//upgrade code goes here
 		//update to current version
-		update_site_option( "mass_mailer_version", "1.6.0" );
+		update_site_option( "mass_mailer_version", MASS_MAILER_VERSION);
 	}
 }
 
 function mass_mailer_install() {
 	global $wpdb;
+	
 	if (get_site_option( "mass_mailer_installed", '' ) == '') {
 		add_site_option( 'mass_mailer_installed', 'no' );
 	}
-	delete_site_option( "mass_mailer_installed" );
+	
 	if (get_site_option( "mass_mailer_installed" ) == "yes") {
 		// do nothing
 	} else {
@@ -210,15 +223,15 @@ function mass_mailer_profile() {
 	
 	$recieve_admin_emails = get_usermeta( $uid, 'recieve_admin_emails' );
 	?>
-    <h3><?php _e('Receive admin emails'); ?></h3>
+    <h3><?php _e('Receive admin emails', MASS_MAILER_LANG_DOMAIN); ?></h3>
     
     <table class="form-table">
     <tr>
-        <th><label for="recieve_admin_emails"><?php _e('Receive admin emails'); ?></label></th>
+        <th><label for="recieve_admin_emails"><?php _e('Receive admin emails', MASS_MAILER_LANG_DOMAIN); ?></label></th>
         <td>
             <select name="recieve_admin_emails" id="recieve_admin_emails">
-                    <option value="yes"<?php if ( $recieve_admin_emails == 'yes' ) { echo ' selected="selected" '; } ?>><?php _e('Yes'); ?></option>
-                    <option value="no"<?php if ( $recieve_admin_emails == 'no' ) { echo ' selected="selected" '; } ?>><?php _e('No'); ?></option>
+                    <option value="yes"<?php if ( $recieve_admin_emails == 'yes' ) { echo ' selected="selected" '; } ?>><?php _e('Yes', MASS_MAILER_LANG_DOMAIN); ?></option>
+                    <option value="no"<?php if ( $recieve_admin_emails == 'no' ) { echo ' selected="selected" '; } ?>><?php _e('No', MASS_MAILER_LANG_DOMAIN); ?></option>
             </select>
         </td>
     
@@ -275,12 +288,6 @@ To receive emails again, login and edit your profile to 'receive admin emails'."
 
 function mass_mailer_page_main_output() {
 	global $wpdb, $wp_roles, $current_user, $user_ID, $current_site, $tmp_send_count;
-	/*
-	if(!current_blog_can('manage_options')) {
-		echo "<p>Nice Try...</p>";  //If accessed properly, this message doesn't appear.
-		return;
-	}
-	*/
 	
 	if (get_site_option( "mass_mailer_message" ) == '') {
 		add_site_option( 'mass_mailer_message', 'empty' );
@@ -296,7 +303,7 @@ function mass_mailer_page_main_output() {
 	}
 
 	if (isset($_GET['updated'])) {
-		?><div id="message" class="updated fade"><p><?php _e('' . urldecode($_GET['updatedmsg']) . '') ?></p></div><?php
+		?><div id="message" class="updated fade"><p><?php _e(urldecode($_GET['updatedmsg']), MASS_MAILER_LANG_DOMAIN) ?></p></div><?php
 	}
 	echo '<div class="wrap">';
 
@@ -310,27 +317,27 @@ function mass_mailer_page_main_output() {
 		//---------------------------------------------------//
 		default:
 			?>
-			<h2><?php _e('Send Email') ?></h2>
-			<p><?php echo $tmp_user_count; ?> out of <?php echo $tmp_users_count; ?> user(s) currently accepting emails.</p>
+			<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
+			<p><?php echo sprintf(__("%s out of %s user(s) currently accepting emails.", MASS_MAILER_LANG_DOMAIN), $tmp_user_count, $tmp_users_count); ?></p>
 			<?php
             if ($tmp_last_email_count != 0) {
-                echo "<p>Your last email still needs to be sent to " . $tmp_last_email_count . " user(s). Click <a href='ms-admin.php?page=mass-mailer&action=loop'>here</a> to finish sending the email.</p>";
+                echo "<p>".sprintf(__("Your last email still needs to be sent to %s user(s). Click <a href='%s'>here</a> to finish sending the email.", MASS_MAILER_LANG_DOMAIN), $tmp_last_email_count, "ms-admin.php?page=mass-mailer&action=loop")."</p>";
             }
             ?>
             <form method="post" action="ms-admin.php?page=mass-mailer&action=process">
             <table class="form-table">
             <tr valign="top">
-            <th scope="row"><?php _e('Sender Email:') ?></th>
+            <th scope="row"><?php _e('Sender Email:', MASS_MAILER_LANG_DOMAIN) ?></th>
             <td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
-            <br /><?php _e('The address that will appear in the "email from" field.') ?></td>
+            <br /><?php _e('The address that will appear in the "email from" field.', MASS_MAILER_LANG_DOMAIN) ?></td>
             </tr>
             <tr valign="top">
-            <th scope="row"><?php _e('Subject:') ?></th>
+            <th scope="row"><?php _e('Subject:', MASS_MAILER_LANG_DOMAIN) ?></th>
             <td><input name="email_subject" type="text" id="subject" style="width: 95%" value="" size="75" />
-            <br /><?php _e('This cannot be left blank.') ?></td>
+            <br /><?php _e('This cannot be left blank.', MASS_MAILER_LANG_DOMAIN) ?></td>
             </tr>
             <tr valign="top">
-            <th scope="row"><?php _e('Content:') ?></th>
+            <th scope="row"><?php _e('Content:', MASS_MAILER_LANG_DOMAIN) ?></th>
             <td><textarea name="email_content" id="email_content" rows='5' style="width: 95%">Dear USERNAME,
 
 Blah Blah Blah
@@ -342,13 +349,13 @@ Blah Blah Blah
 -------------------------
 
 To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</textarea>		
-            <br /><?php _e('Plain text only. No HTML allowed.') ?></td>
+            <br /><?php _e('Plain text only. No HTML allowed.', MASS_MAILER_LANG_DOMAIN) ?></td>
             </tr>
             </table>
             
             <p class="submit">
-            <input type="submit" name="Submit" value="<?php _e('Save Changes') ?>" />
-			<input type="submit" name="Reset" value="<?php _e('Reset') ?>" />
+            <input type="submit" name="Submit" value="<?php _e('Save Changes', MASS_MAILER_LANG_DOMAIN) ?>" />
+			<input type="submit" name="Reset" value="<?php _e('Reset', MASS_MAILER_LANG_DOMAIN) ?>" />
             </p>
             </form>
 		<?php
@@ -359,26 +366,26 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
 			mass_mailer_reset();
 			if ($_POST['email_sender'] == '' || $_POST['email_subject'] == '' || $_POST['email_content'] == '') {
 			?>
-				<h2><?php _e('Send Email') ?></h2>
+				<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
 				<form name="email_form" method="POST" action="ms-admin.php?page=mass-mailer&action=process">
 				<fieldset class="options"> 
-				<legend>Send an email to blog owners. <?php echo $tmp_user_count; ?> out of <?php echo $tmp_users_count; ?> user(s) currently accepting emails.</legend> 
-					<p>You must fill in ALL required fields.</p>
+				<legend><?php echo sprintf(__('Send an email to blog owners. %s out of %s user(s) currently accepting emails.', MASS_MAILER_LANG_DOMAIN), $tmp_user_count, $tmp_users_count); ?></legend> 
+					<p><?php _e('You must fill in ALL required fields.', MASS_MAILER_LANG_DOMAIN); ?></p>
 					<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
 						<tr valign="top"> 
-							<th scope="row">Sender Email:</th> 
+							<th scope="row"><?php _e('Sender Email:', MASS_MAILER_LANG_DOMAIN); ?></th> 
 							<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
 							<br />
-							The address that will appear in the "email from" field.</td> 
+							<?php _e('The address that will appear in the "email from" field.', MASS_MAILER_LANG_DOMAIN); ?></td> 
 						</tr> 
 						<tr valign="top"> 
-							<th scope="row">Subject:</th> 
+							<th scope="row"><?php _e('Subject:', MASS_MAILER_LANG_DOMAIN); ?></th> 
 							<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="" size="75" />
 							<br />
-							This cannot be left blank.</td> 
+							<?php _e('This cannot be left blank.', MASS_MAILER_LANG_DOMAIN); ?></td> 
 						</tr>
 						<tr valign="top"> 
-							<th scope="row">Email Content:</th> 
+							<th scope="row"><?php _e('Email Content:', MASS_MAILER_LANG_DOMAIN); ?></th> 
 							<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%">Dear USERNAME,
 
 Blah Blah Blah
@@ -391,12 +398,12 @@ Blah Blah Blah
 
 To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</textarea>		
 							<br />
-							Plain text only. No HTML allowed.</td> 
+							<?php _e('Plain text only. No HTML allowed.', MASS_MAILER_LANG_DOMAIN); ?></td> 
 						</tr>
 					</table>	
 				</fieldset>
 				<p class="submit"> 
-				<input type="submit" name="Submit" value="Send Email" /> 
+				<input type="submit" name="Submit" value="<?php _e('Send Email', MASS_MAILER_LANG_DOMAIN); ?>" /> 
 				</p> 
 				</form> 
 			<?php
@@ -404,8 +411,8 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
 			} else {
 				//proceed to process
 				?>
-				<h2><?php _e('Send Email') ?></h2>
-				<p>Preparing to send emails... This could take a while. Please be patient!</p>
+				<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
+				<p><?php _e('Preparing to send emails... This could take a while. Please be patient!', MASS_MAILER_LANG_DOMAIN); ?></p>
 				<?php
 				
 				update_site_option( "mass_mailer_message", $_POST['email_content'] );
@@ -431,13 +438,13 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
 				$tmp_emails_left_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->base_prefix}mass_mailer WHERE email_optout = 'yes' AND email_status = 'no'");
 				if ($tmp_emails_left_count == 0){
 					?>
-					<h2><?php _e('Send Email') ?></h2>
-					<p>Finished! </p>
+					<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
+					<p><?php _e('Finished!', MASS_MAILER_LANG_DOMAIN); ?> </p>
 					<?php			
 				} else {
 					?>
-					<h2><?php _e('Send Email') ?></h2>
-					<p>Sending emails... Roughly <?php echo $tmp_emails_left_count; ?> left to send.</p>
+					<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
+					<p><?php echo sprintf(__('Sending emails... Roughly %s left to send.', MASS_MAILER_LANG_DOMAIN), $tmp_emails_left_count); ?></p>
 					<?php
 					
 					//------------------------------//
@@ -464,9 +471,7 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
 		//---------------------------------------------------//
 	}
 	} else {
-		echo "<p>This plugin is only for sites with less than 2,500 users.</p>";
+		echo "<p>".__("This plugin is only for sites with less than 2,500 users", MASS_MAILER_LANG_DOMAIN)."</p>";
 	}
 	echo '</div>';
 }
-
-?>

@@ -1,0 +1,119 @@
+# Translation of the WordPress plugin Mass Mailer 1.6.3 by Andrew Billits.
+# Copyright (C) 2010 Andrew Billits
+# This file is distributed under the same license as the Mass Mailer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Mass Mailer 1.6.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/mass-mailer\n"
+"POT-Creation-Date: 2010-12-15 18:24+0530\n"
+"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: mass-mailer.php:226 mass-mailer.php:230
+msgid "Receive admin emails"
+msgstr ""
+
+#: mass-mailer.php:233
+msgid "Yes"
+msgstr ""
+
+#: mass-mailer.php:234
+msgid "No"
+msgstr ""
+
+#: mass-mailer.php:320 mass-mailer.php:369 mass-mailer.php:406
+#: mass-mailer.php:414 mass-mailer.php:441 mass-mailer.php:446
+msgid "Send Email"
+msgstr ""
+
+#: mass-mailer.php:321
+#, php-format
+msgid "%s out of %s user(s) currently accepting emails."
+msgstr ""
+
+#: mass-mailer.php:324
+#, php-format
+msgid ""
+"Your last email still needs to be sent to %s user(s). Click <a "
+"href='%s'>here</a> to finish sending the email."
+msgstr ""
+
+#: mass-mailer.php:330 mass-mailer.php:376
+msgid "Sender Email:"
+msgstr ""
+
+#: mass-mailer.php:332 mass-mailer.php:379
+msgid "The address that will appear in the \"email from\" field."
+msgstr ""
+
+#: mass-mailer.php:335 mass-mailer.php:382
+msgid "Subject:"
+msgstr ""
+
+#: mass-mailer.php:337 mass-mailer.php:385
+msgid "This cannot be left blank."
+msgstr ""
+
+#: mass-mailer.php:340
+msgid "Content:"
+msgstr ""
+
+#: mass-mailer.php:352 mass-mailer.php:401
+msgid "Plain text only. No HTML allowed."
+msgstr ""
+
+#: mass-mailer.php:357
+msgid "Save Changes"
+msgstr ""
+
+#: mass-mailer.php:358
+msgid "Reset"
+msgstr ""
+
+#: mass-mailer.php:372
+#, php-format
+msgid ""
+"Send an email to blog owners. %s out of %s user(s) currently accepting "
+"emails."
+msgstr ""
+
+#: mass-mailer.php:373
+msgid "You must fill in ALL required fields."
+msgstr ""
+
+#: mass-mailer.php:388
+msgid "Email Content:"
+msgstr ""
+
+#: mass-mailer.php:415
+msgid "Preparing to send emails... This could take a while. Please be patient!"
+msgstr ""
+
+#: mass-mailer.php:442
+msgid "Finished!"
+msgstr ""
+
+#: mass-mailer.php:447
+#, php-format
+msgid "Sending emails... Roughly %s left to send."
+msgstr ""
+
+#: mass-mailer.php:474
+msgid "This plugin is only for sites with less than 2,500 users"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Mass Mailer"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Andrew Billits"
+msgstr ""

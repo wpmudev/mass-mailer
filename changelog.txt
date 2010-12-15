@@ -9,6 +9,7 @@ Change Log:
 ----------------------------------------------------------------------
 - Fixed: 0 out of user(s) currently accepting emails
 - Fixed: Mails not sent
+- Localized all strings
 
 1.6.2 - 06/01/2010
 ----------------------------------------------------------------------
