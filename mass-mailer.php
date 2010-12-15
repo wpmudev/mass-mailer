@@ -167,12 +167,16 @@ function processArrayUsers($arrayName) {
 	}
 }
 
-function mass_mailer_send_email($tmp_user_id) {
+function mass_mailer_send_email($tmp_user_id, $email = null) {
 	global $wpdb, $wp_roles, $current_user, $user_ID, $current_site, $tmp_send_count;
 
-	$tmp_username =  $wpdb->get_var("SELECT user_login FROM ".$wpdb->users." WHERE ID = '" . $tmp_user_id . "'");
-	$tmp_user_email =  $wpdb->get_var("SELECT user_email FROM ".$wpdb->users." WHERE ID = '" . $tmp_user_id . "'");
-
+	if ($tmp_user_id == 0) {
+		$tmp_username = "Test User";
+		$tmp_user_email = $email;
+	} else {
+		$tmp_username =  $wpdb->get_var("SELECT user_login FROM ".$wpdb->users." WHERE ID = '" . $tmp_user_id . "'");
+		$tmp_user_email =  $wpdb->get_var("SELECT user_email FROM ".$wpdb->users." WHERE ID = '" . $tmp_user_id . "'");
+	}
 	$message_content = get_site_option( "mass_mailer_message" );
 	$message_content = str_replace( "SITE_NAME", $current_site->site_name, $message_content );
 	$message_content = str_replace( "USERNAME", $tmp_username, $message_content );
@@ -331,6 +335,11 @@ function mass_mailer_page_main_output() {
             <td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
             <br /><?php _e('The address that will appear in the "email from" field.', MASS_MAILER_LANG_DOMAIN) ?></td>
             </tr>
+	    <tr valign="top">
+            <th scope="row"><?php _e('Test Mail Recepient Email:', MASS_MAILER_LANG_DOMAIN) ?></th>
+            <td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
+            <br /><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", MASS_MAILER_LANG_DOMAIN) ?></td>
+            </tr>
             <tr valign="top">
             <th scope="row"><?php _e('Subject:', MASS_MAILER_LANG_DOMAIN) ?></th>
             <td><input name="email_subject" type="text" id="subject" style="width: 95%" value="" size="75" />
@@ -354,82 +363,83 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
             </table>
             
             <p class="submit">
-            <input type="submit" name="Submit" value="<?php _e('Save Changes', MASS_MAILER_LANG_DOMAIN) ?>" />
-			<input type="submit" name="Reset" value="<?php _e('Reset', MASS_MAILER_LANG_DOMAIN) ?>" />
+		<input type="submit" name="Submit" value="<?php _e('Save Changes', MASS_MAILER_LANG_DOMAIN) ?>" />
+		<input type="reset" name="Reset" value="<?php _e('Reset', MASS_MAILER_LANG_DOMAIN) ?>" />
+		<input type="submit" name="Test" value="<?php _e('Send Test Mail', MASS_MAILER_LANG_DOMAIN) ?>" />
             </p>
             </form>
 		<?php
 		break;
 		//---------------------------------------------------//
 		case "process":
-			//reset email sent status
-			mass_mailer_reset();
-			if ($_POST['email_sender'] == '' || $_POST['email_subject'] == '' || $_POST['email_content'] == '') {
+			if (!($_POST['email_sender'] == '' || $_POST['email_subject'] == '' || $_POST['email_content'] == '')) {
+				if (isset($_POST['Submit'])) {
+					//reset email sent status
+					mass_mailer_reset();
+					//proceed to process
+					?>
+					<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
+					<p><?php _e('Preparing to send emails... This could take a while. Please be patient!', MASS_MAILER_LANG_DOMAIN); ?></p>
+					<?php
+					
+					update_site_option( "mass_mailer_message", $_POST['email_content'] );
+					update_site_option( "mass_mailer_subject", $_POST['email_subject'] );
+					update_site_option( "mass_mailer_sender", $_POST['email_sender'] );
+					update_site_option( "mass_mailer_test", $_POST['email_sender'] );
+					update_site_option( "mass_mailer_number_sent", '0' );
+	
+					echo "
+					<SCRIPT LANGUAGE='JavaScript'>
+					window.location='ms-admin.php?page=mass-mailer&action=loop';
+					</script>
+					";
+					break;
+				} else if (isset($_POST['Test'])) {
+					mass_mailer_send_email(0, $_POST['email_test_to']);
+				}
+			} else {
+				$error = __('You must fill in ALL required fields.', MASS_MAILER_LANG_DOMAIN);
+			}
 			?>
 				<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
 				<form name="email_form" method="POST" action="ms-admin.php?page=mass-mailer&action=process">
-				<fieldset class="options"> 
-				<legend><?php echo sprintf(__('Send an email to blog owners. %s out of %s user(s) currently accepting emails.', MASS_MAILER_LANG_DOMAIN), $tmp_user_count, $tmp_users_count); ?></legend> 
-					<p><?php _e('You must fill in ALL required fields.', MASS_MAILER_LANG_DOMAIN); ?></p>
-					<table width="100%" cellspacing="2" cellpadding="5" class="editform"> 
+				<p><?php echo sprintf(__('Send an email to blog owners. %s out of %s user(s) currently accepting emails.', MASS_MAILER_LANG_DOMAIN), $tmp_user_count, $tmp_users_count); ?></p> 
+					<?php if ($error) { ?>
+					<p><?php echo $error; ?></p>
+					<?php } ?>
+					<table class="form-table"> 
 						<tr valign="top"> 
 							<th scope="row"><?php _e('Sender Email:', MASS_MAILER_LANG_DOMAIN); ?></th> 
-							<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
+							<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php print $_POST['email_sender']; ?>" size="45" />
 							<br />
 							<?php _e('The address that will appear in the "email from" field.', MASS_MAILER_LANG_DOMAIN); ?></td> 
-						</tr> 
+						</tr>
+						<tr valign="top">
+							<th scope="row"><?php _e('Test Mail Recepient Email:', MASS_MAILER_LANG_DOMAIN) ?></th>
+							<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php print $_POST['email_test_to']; ?>" size="45" />
+							<br />
+							<?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", MASS_MAILER_LANG_DOMAIN) ?></td>
+						</tr>
 						<tr valign="top"> 
 							<th scope="row"><?php _e('Subject:', MASS_MAILER_LANG_DOMAIN); ?></th> 
-							<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="" size="75" />
+							<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="<?php print $_POST['email_subject']; ?>" size="75" />
 							<br />
 							<?php _e('This cannot be left blank.', MASS_MAILER_LANG_DOMAIN); ?></td> 
 						</tr>
 						<tr valign="top"> 
 							<th scope="row"><?php _e('Email Content:', MASS_MAILER_LANG_DOMAIN); ?></th> 
-							<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%">Dear USERNAME,
-
-Blah Blah Blah
-
- Thanks!
-
---The Team @ SITE_NAME
-
--------------------------
-
-To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</textarea>		
+							<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php print $_POST['email_content']; ?></textarea>		
 							<br />
 							<?php _e('Plain text only. No HTML allowed.', MASS_MAILER_LANG_DOMAIN); ?></td> 
 						</tr>
-					</table>	
-				</fieldset>
+					</table>
 				<p class="submit"> 
-				<input type="submit" name="Submit" value="<?php _e('Send Email', MASS_MAILER_LANG_DOMAIN); ?>" /> 
+					<input type="submit" name="Submit" value="<?php _e('Save Changes', MASS_MAILER_LANG_DOMAIN); ?>" /> 
+					<input type="reset" name="Reset" value="<?php _e('Reset', MASS_MAILER_LANG_DOMAIN) ?>" />
+					<input type="submit" name="Test" value="<?php _e('Send Test Mail', MASS_MAILER_LANG_DOMAIN) ?>" />
 				</p> 
 				</form> 
 			<?php
-			
-			} else {
-				//proceed to process
-				?>
-				<h2><?php _e('Send Email', MASS_MAILER_LANG_DOMAIN) ?></h2>
-				<p><?php _e('Preparing to send emails... This could take a while. Please be patient!', MASS_MAILER_LANG_DOMAIN); ?></p>
-				<?php
-				
-				update_site_option( "mass_mailer_message", $_POST['email_content'] );
-				update_site_option( "mass_mailer_subject", $_POST['email_subject'] );
-				update_site_option( "mass_mailer_sender", $_POST['email_sender'] );
-				update_site_option( "mass_mailer_number_sent", '0' );
-				//get_site_option( "mass_email_message" );
-				//die ($tmp_loops);
-
-				echo "
-				<SCRIPT LANGUAGE='JavaScript'>
-				window.location='ms-admin.php?page=mass-mailer&action=loop';
-				</script>
-				";
-				
-				//processArrayUsers($users_list);
-			}
 		break;
 		//---------------------------------------------------//
 		case "loop":
