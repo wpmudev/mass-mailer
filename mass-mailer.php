@@ -72,6 +72,7 @@ function mass_mailer_upgrade() {
 	} else {
 		//upgrade code goes here
 		//update to current version
+		// TODO: Fill the tables as previous versions had lot of issues
 		update_site_option( "mass_mailer_version", MASS_MAILER_VERSION);
 	}
 }
@@ -387,7 +388,7 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
 					update_site_option( "mass_mailer_sender", $_POST['email_sender'] );
 					update_site_option( "mass_mailer_test", $_POST['email_sender'] );
 					update_site_option( "mass_mailer_number_sent", '0' );
-	
+					
 					echo "
 					<SCRIPT LANGUAGE='JavaScript'>
 					window.location='ms-admin.php?page=mass-mailer&action=loop';
@@ -395,6 +396,11 @@ To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL</tex
 					";
 					break;
 				} else if (isset($_POST['Test'])) {
+					update_site_option( "mass_mailer_message", $_POST['email_content'] );
+					update_site_option( "mass_mailer_subject", $_POST['email_subject'] );
+					update_site_option( "mass_mailer_sender", $_POST['email_sender'] );
+					update_site_option( "mass_mailer_test", $_POST['email_sender'] );
+					
 					mass_mailer_send_email(0, $_POST['email_test_to']);
 				}
 			} else {
