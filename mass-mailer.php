@@ -72,7 +72,7 @@ function mass_mailer_upgrade() {
 	} else {
 		//upgrade code goes here
 		//update to current version
-		// TODO: Fill the tables as previous versions had lot of issues
+		mass_mailer_table_populate();
 		update_site_option( "mass_mailer_version", MASS_MAILER_VERSION);
 	}
 }
