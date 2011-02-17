@@ -4,7 +4,7 @@ Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
 Author: Andrew Billits, Ulrich Sossou
-Version: 1.6.4
+Version: 1.6.5
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
 Network: true
@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-if ( !is_multisite() )
+if ( ! is_multisite() )
 	exit( __( 'The Mass Email Sender plugin is only compatible with WordPress Multisite.', 'mass_mailer' ) );
 
 /**
@@ -39,7 +39,7 @@ class Mass_Mailer {
 	/**
 	 * Current version of the plugin
 	 **/
-	var $version = '1.6.4';
+	var $version = '1.6.5';
 
 	/**
 	 * PHP4 constructor
@@ -92,6 +92,7 @@ class Mass_Mailer {
 			update_site_option( 'mass_mailer_version', $this->version );
 			update_site_option( 'mass_mailer_installed', 'no' );
 			$this->table_populate();
+			update_site_option( 'mass_mailer_installed', 'yes' );
 		}
 
 		$this->install();
@@ -145,15 +146,15 @@ class Mass_Mailer {
 		global $wpdb;
 		foreach ( $arrayName as $arrayElement ) {
 			$tmp_email_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->base_prefix}mass_mailer WHERE email_user_id = '" . $arrayElement['ID']. "'");
-			if ( '0' == $tmp_email_count ) {
-				$tmp_email_count2 = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->base_prefix}usermeta WHERE user_id = '" . $arrayElement['ID'] . "' AND meta_key = 'recieve_admin_emails'");
-				if ( '0' == $tmp_email_count2 ) {
-					$wpdb->query( "INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( '" . $arrayElement['ID'] . "', 'yes', 'yes' )" );
-				} else {
-					$wpdb->query( "INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( '" . $arrayElement['ID'] . "', '" . get_user_meta($arrayElement, 'recieve_admin_emails') . "', 'yes' )" );
-				}
-			} else {
+			if ( $tmp_email_count ) {
 				$wpdb->query( "UPDATE {$wpdb->base_prefix}mass_mailer SET email_optout = '" . get_user_meta($arrayElement, 'recieve_admin_emails') . "' WHERE email_user_id = '" . $arrayElement['ID'] . "'" );
+			} else {
+				$tmp_email_count2 = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->base_prefix}usermeta WHERE user_id = '" . $arrayElement['ID'] . "' AND meta_key = 'recieve_admin_emails'");
+				if ( $tmp_email_count2 ) {
+					$wpdb->query( "INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( '" . $arrayElement['ID'] . "', '" . get_user_meta($arrayElement, 'recieve_admin_emails') . "', 'yes' )" );
+				} else {
+					$wpdb->query( "INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( '" . $arrayElement['ID'] . "', 'yes', 'yes' )" );
+				}
 			}
 		}
 	}
@@ -176,10 +177,10 @@ class Mass_Mailer {
 
 		$email_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->base_prefix}mass_mailer WHERE email_user_id = %d", $current_user->ID ) );
 
-		if ( ! empty( $email_count ) ) {
-				$wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->base_prefix}mass_mailer ( email_user_id, email_optout, email_status ) VALUES ( %d, 'yes', 'yes' )", $current_user->ID ) );
+		if ( $email_count ) {
+			$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->base_prefix}mass_mailer SET email_optout = %s WHERE email_user_id = %d", get_user_meta( $current_user->ID, 'recieve_admin_emails' ), $current_user->ID ) );
 		} else {
-				$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->base_prefix}mass_mailer SET email_optout = %s WHERE email_user_id = %d", get_user_meta( $current_user->ID, 'recieve_admin_emails' ), $current_user->ID ) );
+			$wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->base_prefix}mass_mailer ( email_user_id, email_optout, email_status ) VALUES ( %d, 'yes', 'yes' )", $current_user->ID ) );
 		}
 	}
 
