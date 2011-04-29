@@ -5,6 +5,13 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.6.6 - 04/29/2011 Vladislav Bailovic
+----------------------------------------------------------------------
+- Changed main button to read "Send Mail".
+- Fix for mail queue processing problem.
+- Fixed redirection to front page. Plugin gracefuly dies with an appropriate message.
+- Prepared unsubscribe message for l10n.
+
 1.6.5 - 02/17/2010
 ----------------------------------------------------------------------
 - Fix duplicate entries in plugin table

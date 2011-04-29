@@ -110,6 +110,9 @@ msgstr ""
 msgid "This plugin is only for sites with less than 2,500 users"
 msgstr ""
 
+msgid "Hello %s, <br />You are now successfully <strong>unsubscribed</strong> from future admin emails from <em>%s</em>. <br />One last email has been sent to you to confirm this fact."
+msgstr ""
+
 #. Plugin Name of the plugin/theme
 msgid "Mass Mailer"
 msgstr ""
