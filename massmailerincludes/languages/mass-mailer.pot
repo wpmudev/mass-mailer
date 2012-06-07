@@ -3,120 +3,193 @@
 # This file is distributed under the same license as the Mass Mailer package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Mass Mailer 1.6.3\n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/mass-mailer\n"
-"POT-Creation-Date: 2010-12-15 18:24+0530\n"
-"PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Project-Id-Version: Mass Mailer\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-04 09:18+0100\n"
+"PO-Revision-Date: 2011-10-04 09:18+0100\n"
+"Last-Translator: \n"
+"Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: D:\\xampp\\htdocs\\wp3.2.1\\wp-content\\plugins\\mass-mailer\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: mass-mailer.php:226 mass-mailer.php:230
-msgid "Receive admin emails"
+#: mass-mailer.php:32
+msgid "The Mass Email Sender plugin is only compatible with WordPress Multisite."
 msgstr ""
 
-#: mass-mailer.php:233
-msgid "Yes"
+#: mass-mailer.php:111
+msgid "We have problem finding your '/wp-admin/upgrade-functions.php' and '/wp-admin/includes/upgrade.php'"
 msgstr ""
 
-#: mass-mailer.php:234
-msgid "No"
+#: mass-mailer.php:208
+msgid "Test User"
 msgstr ""
 
-#: mass-mailer.php:320 mass-mailer.php:369 mass-mailer.php:406
-#: mass-mailer.php:414 mass-mailer.php:441 mass-mailer.php:446
+#: mass-mailer.php:227
+#: mass-mailer.php:314
+msgid "Blog Provider"
+msgstr ""
+
+#: mass-mailer.php:232
+#: mass-mailer.php:236
+#: mass-mailer.php:358
+#: mass-mailer.php:390
+#: mass-mailer.php:405
+#: mass-mailer.php:433
+#: mass-mailer.php:466
+#: mass-mailer.php:480
+#: mass-mailer.php:485
 msgid "Send Email"
 msgstr ""
 
-#: mass-mailer.php:321
+#: mass-mailer.php:269
+#: mass-mailer.php:273
+msgid "Receive admin emails"
+msgstr ""
+
+#: mass-mailer.php:277
+msgid "Yes"
+msgstr ""
+
+#: mass-mailer.php:278
+msgid "No"
+msgstr ""
+
+#: mass-mailer.php:301
+msgid ""
+"Dear USERNAME,\n"
+"\n"
+"You have been successfully unsubscribed from future emails.\n"
+"\n"
+"Thanks!\n"
+"\n"
+"--The Team @ SITE_NAME\n"
+"\n"
+"-------------------------\n"
+"\n"
+"To receive emails again, login and edit your profile to 'receive admin emails'."
+msgstr ""
+
+#: mass-mailer.php:315
+msgid "Unsubscribed"
+msgstr ""
+
+#: mass-mailer.php:317
+#, php-format
+msgid "Hello %s, <br />You are now successfully <strong>unsubscribed</strong> from future admin emails from <em>%s</em>. <br />One last email has been sent to you to confirm this fact."
+msgstr ""
+
+#: mass-mailer.php:359
 #, php-format
 msgid "%s out of %s user(s) currently accepting emails."
 msgstr ""
 
-#: mass-mailer.php:324
+#: mass-mailer.php:362
 #, php-format
-msgid ""
-"Your last email still needs to be sent to %s user(s). Click <a "
-"href='%s'>here</a> to finish sending the email."
+msgid "Your last email still needs to be sent to %s user(s). Click <a href='%s'>here</a> to finish sending the email."
 msgstr ""
 
-#: mass-mailer.php:330 mass-mailer.php:376
+#: mass-mailer.php:368
+#: mass-mailer.php:441
 msgid "Sender Email:"
 msgstr ""
 
-#: mass-mailer.php:332 mass-mailer.php:379
+#: mass-mailer.php:370
+#: mass-mailer.php:444
 msgid "The address that will appear in the \"email from\" field."
 msgstr ""
 
-#: mass-mailer.php:335 mass-mailer.php:382
+#: mass-mailer.php:373
+#: mass-mailer.php:447
+msgid "Test Mail Recepient Email:"
+msgstr ""
+
+#: mass-mailer.php:375
+#: mass-mailer.php:450
+msgid "Test mail recepient's address, will be ingored when sending sending mails out."
+msgstr ""
+
+#: mass-mailer.php:378
+#: mass-mailer.php:453
 msgid "Subject:"
 msgstr ""
 
-#: mass-mailer.php:337 mass-mailer.php:385
+#: mass-mailer.php:380
+#: mass-mailer.php:456
 msgid "This cannot be left blank."
 msgstr ""
 
-#: mass-mailer.php:340
+#: mass-mailer.php:383
 msgid "Content:"
 msgstr ""
 
-#: mass-mailer.php:352 mass-mailer.php:401
+#: mass-mailer.php:384
+msgid ""
+"Dear USERNAME,\n"
+"\n"
+"Blah Blah Blah\n"
+"\n"
+"Thanks!\n"
+"\n"
+"--The Team @ SITE_NAME\n"
+"\n"
+"-------------------------\n"
+"\n"
+"To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL"
+msgstr ""
+
+#: mass-mailer.php:385
+#: mass-mailer.php:462
 msgid "Plain text only. No HTML allowed."
 msgstr ""
 
-#: mass-mailer.php:357
-msgid "Save Changes"
-msgstr ""
-
-#: mass-mailer.php:358
+#: mass-mailer.php:391
+#: mass-mailer.php:467
 msgid "Reset"
 msgstr ""
 
-#: mass-mailer.php:372
-#, php-format
-msgid ""
-"Send an email to blog owners. %s out of %s user(s) currently accepting "
-"emails."
+#: mass-mailer.php:392
+#: mass-mailer.php:468
+msgid "Send Test Mail"
 msgstr ""
 
-#: mass-mailer.php:373
-msgid "You must fill in ALL required fields."
-msgstr ""
-
-#: mass-mailer.php:388
-msgid "Email Content:"
-msgstr ""
-
-#: mass-mailer.php:415
+#: mass-mailer.php:406
 msgid "Preparing to send emails... This could take a while. Please be patient!"
 msgstr ""
 
-#: mass-mailer.php:442
+#: mass-mailer.php:430
+msgid "You must fill in ALL required fields."
+msgstr ""
+
+#: mass-mailer.php:435
+#, php-format
+msgid "Send an email to blog owners. %s out of %s user(s) currently accepting emails."
+msgstr ""
+
+#: mass-mailer.php:459
+msgid "Email Content:"
+msgstr ""
+
+#: mass-mailer.php:481
 msgid "Finished!"
 msgstr ""
 
-#: mass-mailer.php:447
+#: mass-mailer.php:486
 #, php-format
 msgid "Sending emails... Roughly %s left to send."
 msgstr ""
 
-#: mass-mailer.php:474
+#: mass-mailer.php:509
 msgid "This plugin is only for sites with less than 2,500 users"
 msgstr ""
 
-msgid "Hello %s, <br />You are now successfully <strong>unsubscribed</strong> from future admin emails from <em>%s</em>. <br />One last email has been sent to you to confirm this fact."
+#: mass-mailer.php:527
+msgid "Please install the latest version of <a href=\"http://premium.wpmudev.org/project/update-notifications/\" title=\"Download Now &raquo;\">our free Update Notifications plugin</a> which helps you stay up-to-date with the most stable, secure versions of WPMU DEV themes and plugins. <a href=\"http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-information/\">More information &raquo;</a>"
 msgstr ""
 
-#. Plugin Name of the plugin/theme
-msgid "Mass Mailer"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Andrew Billits"
-msgstr ""

@@ -4,7 +4,7 @@ Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
 Author: Andrew Billits, Ulrich Sossou
-Version: 1.6.6
+Version: 1.6.7
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
 Network: true
@@ -54,8 +54,8 @@ class Mass_Mailer {
 	function __construct() {
 		global $wp_version;
 
+		add_action( 'admin_init', array( &$this, 'install' ) );
 		add_action( 'admin_init', array( &$this, 'upgrade' ) );
-
 		add_action( 'admin_init', array( &$this, 'user_install' ) );
 
 		// Add the super admin page
@@ -81,7 +81,6 @@ class Mass_Mailer {
 
 	function upgrade() {
 		global $plugin_page;
-
 		if( 'mass-mailer' !== $plugin_page )
 			return;
 
@@ -314,10 +313,10 @@ class Mass_Mailer {
 			if( empty( $current_site->site_name ) )
 				$current_site->site_name = __( 'Blog Provider', 'mass_mailer' );
 			wp_mail( $tmp_user_email, __( 'Unsubscribed', 'mass_mailer' ), $message_content, $message_headers);
-			wp_die(__(sprintf(
-				"Hello %s, <br />You are now successfully <strong>unsubscribed</strong> from future admin emails from <em>%s</em>. <br />One last email has been sent to you to confirm this fact.",
+			wp_die(sprintf(
+				__("Hello %s, <br />You are now successfully <strong>unsubscribed</strong> from future admin emails from <em>%s</em>. <br />One last email has been sent to you to confirm this fact."),
 				$tmp_username, $current_site->site_name
-			)));
+			));
 		}
 	}
 
@@ -452,13 +451,13 @@ class Mass_Mailer {
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Subject:', 'mass_mailer'); ?></th>
-									<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="<?php print $_POST['email_subject']; ?>" size="75" />
+									<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="<?php print stripslashes($_POST['email_subject']); ?>" size="75" />
 									<br />
 									<?php _e('This cannot be left blank.', 'mass_mailer'); ?></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Email Content:', 'mass_mailer'); ?></th>
-									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php print $_POST['email_content']; ?></textarea>
+									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php print stripslashes($_POST['email_content']); ?></textarea>
 									<br />
 									<?php _e('Plain text only. No HTML allowed.', 'mass_mailer'); ?></td>
 								</tr>
