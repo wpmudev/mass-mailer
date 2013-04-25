@@ -3,8 +3,8 @@
 Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
-Author: Andrew Billits, Ulrich Sossou
-Version: 1.6.7
+Author: Andrew Billits, Ulrich Sossou, Mariusz Misiek (Incsub)
+Version: 1.6.8
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
 Network: true
@@ -111,7 +111,7 @@ class Mass_Mailer {
 				die( __( 'We have problem finding your \'/wp-admin/upgrade-functions.php\' and \'/wp-admin/includes/upgrade.php\'', 'mass_mailer' ) );
 
 			$charset_collate = '';
-			if( $wpdb->supports_collation() ) {
+			if( $wpdb->has_cap('collation') ) {
 				if( !empty( $wpdb->charset ) ) {
 					$charset_collate = "DEFAULT CHARACTER SET $wpdb->charset";
 				}
@@ -144,15 +144,15 @@ class Mass_Mailer {
 	function processArrayUsersPopulate( $arrayName ) {
 		global $wpdb;
 		foreach ( $arrayName as $arrayElement ) {
-			$tmp_email_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->base_prefix}mass_mailer WHERE email_user_id = '" . $arrayElement['ID']. "'");
+			$tmp_email_count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->base_prefix}mass_mailer WHERE email_user_id = %d", $arrayElement['ID']));
 			if ( $tmp_email_count ) {
-				$wpdb->query( "UPDATE {$wpdb->base_prefix}mass_mailer SET email_optout = '" . get_user_meta($arrayElement['ID'], 'recieve_admin_emails', true) . "' WHERE email_user_id = '" . $arrayElement['ID'] . "'" );
+				$wpdb->query( $wpdb->prepare("UPDATE {$wpdb->base_prefix}mass_mailer SET email_optout = %s WHERE email_user_id = %d", get_user_meta($arrayElement['ID'], 'recieve_admin_emails', true), $arrayElement['ID'] ));
 			} else {
-				$tmp_email_count2 = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->base_prefix}usermeta WHERE user_id = '" . $arrayElement['ID'] . "' AND meta_key = 'recieve_admin_emails'");
+				$tmp_email_count2 = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM {$wpdb->base_prefix}usermeta WHERE user_id = %d AND meta_key = 'recieve_admin_emails'", $arrayElement['ID'] ));
 				if ( $tmp_email_count2 ) {
-					$wpdb->query( "INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( '" . $arrayElement['ID'] . "', '" . get_user_meta($arrayElement['ID'], 'recieve_admin_emails', true) . "', 'yes' )" );
+					$wpdb->query( $wpdb->prepare("INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( %d, %s, 'yes' )", $arrayElement['ID'], get_user_meta($arrayElement['ID'], 'recieve_admin_emails', true) ));
 				} else {
-					$wpdb->query( "INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( '" . $arrayElement['ID'] . "', 'yes', 'yes' )" );
+					$wpdb->query( $wpdb->prepare("INSERT INTO {$wpdb->base_prefix}mass_mailer (email_user_id, email_optout, email_status) VALUES ( %d, 'yes', 'yes' )", $arrayElement['ID'] ));
 				}
 			}
 			//echo $arrayElement['ID'] . ': ' . var_export(get_user_meta($arrayElement['ID'], 'recieve_admin_emails', true),1) . '<hr>';
@@ -208,8 +208,8 @@ class Mass_Mailer {
 			$tmp_username = __( 'Test User', 'mass_mailer' );
 			$tmp_user_email = $email;
 		} else {
-			$tmp_username =  $wpdb->get_var("SELECT user_login FROM ".$wpdb->users." WHERE ID = '" . $tmp_user_id . "'");
-			$tmp_user_email =  $wpdb->get_var("SELECT user_email FROM ".$wpdb->users." WHERE ID = '" . $tmp_user_id . "'");
+			$tmp_username =  $wpdb->get_var( $wpdb->prepare("SELECT user_login FROM ".$wpdb->users." WHERE ID = %d", $tmp_user_id));
+			$tmp_user_email =  $wpdb->get_var( $wpdb->prepare("SELECT user_email FROM ".$wpdb->users." WHERE ID = %d", $tmp_user_id));
 		}
 		$message_content = get_site_option( "mass_mailer_message" );
 		$message_content = str_replace( "SITE_NAME", $current_site->site_name, $message_content );
@@ -367,29 +367,29 @@ class Mass_Mailer {
 					<tr valign="top">
 					<th scope="row"><?php _e('Sender Email:', 'mass_mailer') ?></th>
 					<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
-					<br /><?php _e('The address that will appear in the "email from" field.', 'mass_mailer') ?></td>
+					<p class="description"><?php _e('The address that will appear in the "email from" field.', 'mass_mailer') ?></p></td>
 					</tr>
 				<tr valign="top">
 					<th scope="row"><?php _e('Test Mail Recepient Email:', 'mass_mailer') ?></th>
 					<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
-					<br /><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></td>
+					<p class="description"><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></p></td>
 					</tr>
 					<tr valign="top">
 					<th scope="row"><?php _e('Subject:', 'mass_mailer') ?></th>
 					<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="" size="75" />
-					<br /><?php _e('This cannot be left blank.', 'mass_mailer') ?></td>
+					<p class="description"><?php _e('This cannot be left blank.', 'mass_mailer') ?></p></td>
 					</tr>
 					<tr valign="top">
 					<th scope="row"><?php _e('Content:', 'mass_mailer') ?></th>
 					<td><textarea name="email_content" id="email_content" rows='5' style="width: 95%"><?php _e( "Dear USERNAME,\n\nBlah Blah Blah\n\nThanks!\n\n--The Team @ SITE_NAME\n\n-------------------------\n\nTo unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL", 'mass_mailer' ) ?></textarea>
-					<br /><?php _e('Plain text only. No HTML allowed.', 'mass_mailer') ?></td>
+					<p class="description"><?php _e('Plain text only. No HTML allowed.', 'mass_mailer') ?></p></td>
 					</tr>
 					</table>
 
 					<p class="submit">
-						<input type="submit" name="Submit" value="<?php _e('Send Email', 'mass_mailer') ?>" />
-						<input type="reset" name="Reset" value="<?php _e('Reset', 'mass_mailer') ?>" />
-						<input type="submit" name="Test" value="<?php _e('Send Test Mail', 'mass_mailer') ?>" />
+						<input class="button button-primary" type="submit" name="Submit" value="<?php _e('Send Email', 'mass_mailer') ?>" />
+						<input class="button" type="reset" name="Reset" value="<?php _e('Reset', 'mass_mailer') ?>" />
+						<input class="button" type="submit" name="Test" value="<?php _e('Send Test Mail', 'mass_mailer') ?>" />
 					</p>
 					</form>
 				<?php
@@ -440,32 +440,28 @@ class Mass_Mailer {
 								<tr valign="top">
 									<th scope="row"><?php _e('Sender Email:', 'mass_mailer'); ?></th>
 									<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php print $_POST['email_sender']; ?>" size="45" />
-									<br />
-									<?php _e('The address that will appear in the "email from" field.', 'mass_mailer'); ?></td>
+									<p class="description"><?php _e('The address that will appear in the "email from" field.', 'mass_mailer'); ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Test Mail Recepient Email:', 'mass_mailer') ?></th>
 									<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php print $_POST['email_test_to']; ?>" size="45" />
-									<br />
-									<?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></td>
+									<p class="description"><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Subject:', 'mass_mailer'); ?></th>
 									<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="<?php print stripslashes($_POST['email_subject']); ?>" size="75" />
-									<br />
-									<?php _e('This cannot be left blank.', 'mass_mailer'); ?></td>
+									<p class="description"><?php _e('This cannot be left blank.', 'mass_mailer'); ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Email Content:', 'mass_mailer'); ?></th>
 									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php print stripslashes($_POST['email_content']); ?></textarea>
-									<br />
-									<?php _e('Plain text only. No HTML allowed.', 'mass_mailer'); ?></td>
+									<p class="description"><?php _e('Plain text only. No HTML allowed.', 'mass_mailer'); ?></p></td>
 								</tr>
 							</table>
 						<p class="submit">
-							<input type="submit" name="Submit" value="<?php _e('Send Email', 'mass_mailer'); ?>" />
-							<input type="reset" name="Reset" value="<?php _e('Reset', 'mass_mailer') ?>" />
-							<input type="submit" name="Test" value="<?php _e('Send Test Mail', 'mass_mailer') ?>" />
+							<input class="button button-primary" type="submit" name="Submit" value="<?php _e('Send Email', 'mass_mailer'); ?>" />
+							<input class="button" type="reset" name="Reset" value="<?php _e('Reset', 'mass_mailer') ?>" />
+							<input class="button" type="submit" name="Test" value="<?php _e('Send Test Mail', 'mass_mailer') ?>" />
 						</p>
 						</form>
 					<?php
