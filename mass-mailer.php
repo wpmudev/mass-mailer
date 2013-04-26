@@ -4,7 +4,7 @@ Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
 Author: Andrew Billits, Ulrich Sossou, Mariusz Misiek (Incsub)
-Version: 1.6.8
+Version: 1.6.9
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
 Network: true
@@ -272,7 +272,7 @@ class Mass_Mailer {
 		<tr>
 			<th><label for="recieve_admin_emails"><?php _e('Receive admin emails', 'mass_mailer'); ?></label></th>
 			<td>
-				<input type="hidden" name="mass_mailer_uid" value="<?php echo $uid;?>" />
+				<input type="hidden" name="mass_mailer_uid" value="<?php echo esc_attr($uid);?>" />
 				<select name="recieve_admin_emails" id="recieve_admin_emails">
 						<option value="yes"<?php if ( $recieve_admin_emails == 'yes' ) { echo ' selected="selected" '; } ?>><?php _e('Yes', 'mass_mailer'); ?></option>
 						<option value="no"<?php if ( $recieve_admin_emails == 'no' ) { echo ' selected="selected" '; } ?>><?php _e('No', 'mass_mailer'); ?></option>
@@ -366,12 +366,12 @@ class Mass_Mailer {
 					<table class="form-table">
 					<tr valign="top">
 					<th scope="row"><?php _e('Sender Email:', 'mass_mailer') ?></th>
-					<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
+					<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo esc_attr( get_site_option('admin_email') ) ?>" size="45" />
 					<p class="description"><?php _e('The address that will appear in the "email from" field.', 'mass_mailer') ?></p></td>
 					</tr>
 				<tr valign="top">
 					<th scope="row"><?php _e('Test Mail Recepient Email:', 'mass_mailer') ?></th>
-					<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo stripslashes( get_site_option('admin_email') ) ?>" size="45" />
+					<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo esc_attr( get_site_option('admin_email') ) ?>" size="45" />
 					<p class="description"><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></p></td>
 					</tr>
 					<tr valign="top">
@@ -439,22 +439,22 @@ class Mass_Mailer {
 							<table class="form-table">
 								<tr valign="top">
 									<th scope="row"><?php _e('Sender Email:', 'mass_mailer'); ?></th>
-									<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php print $_POST['email_sender']; ?>" size="45" />
+									<td><input name="email_sender" type="text" id="from_email" style="width: 95%" value="<?php echo esc_attr($_POST['email_sender']); ?>" size="45" />
 									<p class="description"><?php _e('The address that will appear in the "email from" field.', 'mass_mailer'); ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Test Mail Recepient Email:', 'mass_mailer') ?></th>
-									<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php print $_POST['email_test_to']; ?>" size="45" />
+									<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo esc_attr($_POST['email_test_to']); ?>" size="45" />
 									<p class="description"><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Subject:', 'mass_mailer'); ?></th>
-									<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="<?php print stripslashes($_POST['email_subject']); ?>" size="75" />
+									<td><input name="email_subject" type="text" id="subject" style="width: 95%" value="<?php echo esc_attr($_POST['email_subject']); ?>" size="75" />
 									<p class="description"><?php _e('This cannot be left blank.', 'mass_mailer'); ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Email Content:', 'mass_mailer'); ?></th>
-									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php print stripslashes($_POST['email_content']); ?></textarea>
+									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php echo esc_textarea($_POST['email_content']); ?></textarea>
 									<p class="description"><?php _e('Plain text only. No HTML allowed.', 'mass_mailer'); ?></p></td>
 								</tr>
 							</table>
