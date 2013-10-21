@@ -1,9 +1,14 @@
 Plugin Name: Mass Mailer
-Author: Andrew Billits, Ulrich Sossou
+Author: Andrew Billits, Ulrich Sossou, Mariusz Misiek
 
 Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+
+1.7 - 10/21/2013
+----------------------------------------------------------------------
+- Added default language files
+- Fixed problems with apostrophe
 
 1.6.9 - 04/26/2013
 ----------------------------------------------------------------------

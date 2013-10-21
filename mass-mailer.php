@@ -4,7 +4,7 @@ Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
 Author: Andrew Billits, Ulrich Sossou, Mariusz Misiek (Incsub)
-Version: 1.6.9
+Version: 1.7
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
 Network: true
@@ -212,6 +212,7 @@ class Mass_Mailer {
 			$tmp_user_email =  $wpdb->get_var( $wpdb->prepare("SELECT user_email FROM ".$wpdb->users." WHERE ID = %d", $tmp_user_id));
 		}
 		$message_content = get_site_option( "mass_mailer_message" );
+		$message_content = stripslashes($message_content);
 		$message_content = str_replace( "SITE_NAME", $current_site->site_name, $message_content );
 		$message_content = str_replace( "USERNAME", $tmp_username, $message_content );
 		$message_content = str_replace( "\'", "'", $message_content );
@@ -454,7 +455,7 @@ class Mass_Mailer {
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Email Content:', 'mass_mailer'); ?></th>
-									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php echo esc_textarea($_POST['email_content']); ?></textarea>
+									<td><textarea name="email_content" id="email_content" rows='5' cols='45' style="width: 95%"><?php echo esc_textarea(stripslashes($_POST['email_content'])); ?></textarea>
 									<p class="description"><?php _e('Plain text only. No HTML allowed.', 'mass_mailer'); ?></p></td>
 								</tr>
 							</table>
@@ -509,17 +510,6 @@ class Mass_Mailer {
 
 }
 
-$mass_mailer =& new Mass_Mailer();
+$mass_mailer = new Mass_Mailer();
 
-/**
- * Show notification if WPMUDEV Update Notifications plugin is not installed
- **/
-if ( !function_exists( 'wdp_un_check' ) ) {
-	add_action( 'admin_notices', 'wdp_un_check', 5 );
-	add_action( 'network_admin_notices', 'wdp_un_check', 5 );
-
-	function wdp_un_check() {
-		if ( !class_exists( 'WPMUDEV_Update_Notifications' ) && current_user_can( 'edit_users' ) )
-			echo '<div class="error fade"><p>' . __('Please install the latest version of <a href="http://premium.wpmudev.org/project/update-notifications/" title="Download Now &raquo;">our free Update Notifications plugin</a> which helps you stay up-to-date with the most stable, secure versions of WPMU DEV themes and plugins. <a href="http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-information/">More information &raquo;</a>', 'wds') . '</a></p></div>';
-	}
-}
+include_once('massmailerincludes/wpmudev-dash-notification.php');
