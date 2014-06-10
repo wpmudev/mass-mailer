@@ -1,5 +1,7 @@
 Plugin Name: Mass Mailer
-Author: Andrew Billits, Ulrich Sossou, Mariusz Misiek
+Author: WPMUDEV
+Lead developer: Maniu
+Contributors: Andrew Billits, Ulrich Sossou
 
 Change Log:
 ----------------------------------------------------------------------

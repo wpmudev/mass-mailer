@@ -3,7 +3,7 @@
 Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
-Author: Andrew Billits, Ulrich Sossou, Mariusz Misiek (Incsub)
+Author: WPMUDEV
 Version: 1.7
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
@@ -222,7 +222,7 @@ class Mass_Mailer {
 		$admin_email = get_site_option( "mass_mailer_sender" );
 		if( $admin_email == '' )
 			$admin_email = 'support@' . $_SERVER[ 'SERVER_NAME' ];
-		$message_headers = "MIME-Version: 1.0\n" . "From: " . get_site_option( "site_name" ) .  " <{$admin_email}>\n" . "Content-Type: text/plain; charset=\"" . get_option('blog_charset') . "\"\n";
+		$message_headers = "MIME-Version: 1.0\n" . "From: " . get_site_option( "site_name" ) .  " <{$admin_email}>\n" . "Content-Type: text/html; charset=\"" . get_option('blog_charset') . "\"\n";
 
 		if( empty( $current_site->site_name ) )
 			$current_site->site_name = __( 'Blog Provider', 'mass_mailer' );
