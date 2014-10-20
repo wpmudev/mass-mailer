@@ -107,12 +107,12 @@ msgstr ""
 
 #: mass-mailer.php:373
 #: mass-mailer.php:447
-msgid "Test Mail Recepient Email:"
+msgid "Test Mail Recipient Email:"
 msgstr ""
 
 #: mass-mailer.php:375
 #: mass-mailer.php:450
-msgid "Test mail recepient's address, will be ingored when sending sending mails out."
+msgid "Test mail recipient's address, will be ignored when sending sending mails out."
 msgstr ""
 
 #: mass-mailer.php:378

@@ -4,7 +4,7 @@ Plugin Name: Mass Email Sender
 Plugin URI: http://premium.wpmudev.org/project/mass-email-sender
 Description: Allows you to send emails to all users via defined mailing lists. Users also have the option to unsubscribe from the mailing list.
 Author: WPMUDEV
-Version: 1.7
+Version: 1.7.1
 Author URI: http://premium.wpmudev.org/project/
 Text Domain: mass_mailer
 Network: true
@@ -40,13 +40,6 @@ class Mass_Mailer {
 	 * Current version of the plugin
 	 **/
 	var $version = '1.6.6';
-
-	/**
-	 * PHP4 constructor
-	 **/
-	function Mass_Mailer() {
-		__construct();
-	}
 
 	/**
 	 * PHP5 constructor
@@ -371,9 +364,9 @@ class Mass_Mailer {
 					<p class="description"><?php _e('The address that will appear in the "email from" field.', 'mass_mailer') ?></p></td>
 					</tr>
 				<tr valign="top">
-					<th scope="row"><?php _e('Test Mail Recepient Email:', 'mass_mailer') ?></th>
+					<th scope="row"><?php _e('Test Mail Recipient Email:', 'mass_mailer') ?></th>
 					<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo esc_attr( get_site_option('admin_email') ) ?>" size="45" />
-					<p class="description"><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></p></td>
+					<p class="description"><?php _e("Test mail recipient's address, will be ignored when sending sending mails out.", 'mass_mailer') ?></p></td>
 					</tr>
 					<tr valign="top">
 					<th scope="row"><?php _e('Subject:', 'mass_mailer') ?></th>
@@ -382,7 +375,7 @@ class Mass_Mailer {
 					</tr>
 					<tr valign="top">
 					<th scope="row"><?php _e('Content:', 'mass_mailer') ?></th>
-					<td><textarea name="email_content" id="email_content" rows='5' style="width: 95%"><?php _e( "Dear USERNAME,\n\nBlah Blah Blah\n\nThanks!\n\n--The Team @ SITE_NAME\n\n-------------------------\n\nTo unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL", 'mass_mailer' ) ?></textarea>
+					<td><textarea name="email_content" id="email_content" rows='5' style="width: 95%"><?php _e( "Dear USERNAME,\n\nEmail Content\n\nThanks!\n\n--The Team @ SITE_NAME\n\n-------------------------\n\nTo unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL", 'mass_mailer' ) ?></textarea>
 					<p class="description"><?php _e('Plain text only. No HTML allowed.', 'mass_mailer') ?></p></td>
 					</tr>
 					</table>
@@ -444,9 +437,9 @@ class Mass_Mailer {
 									<p class="description"><?php _e('The address that will appear in the "email from" field.', 'mass_mailer'); ?></p></td>
 								</tr>
 								<tr valign="top">
-									<th scope="row"><?php _e('Test Mail Recepient Email:', 'mass_mailer') ?></th>
+									<th scope="row"><?php _e('Test Mail Recipient Email:', 'mass_mailer') ?></th>
 									<td><input name="email_test_to" type="text" id="email_test_to" style="width: 95%" value="<?php echo esc_attr($_POST['email_test_to']); ?>" size="45" />
-									<p class="description"><?php _e("Test mail recepient's address, will be ingored when sending sending mails out.", 'mass_mailer') ?></p></td>
+									<p class="description"><?php _e("Test mail recipient's address, will be ignored when sending sending mails out.", 'mass_mailer') ?></p></td>
 								</tr>
 								<tr valign="top">
 									<th scope="row"><?php _e('Subject:', 'mass_mailer'); ?></th>

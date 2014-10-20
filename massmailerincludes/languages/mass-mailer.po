@@ -7,57 +7,77 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mass Mailer\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-04 09:18+0100\n"
-"PO-Revision-Date: 2013-10-11 14:02+0100\n"
+"POT-Creation-Date: 2014-10-20 11:16+0100\n"
+"PO-Revision-Date: 2014-10-20 11:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: D:\\xampp\\htdocs\\wp3.2.1\\wp-content\\plugins\\mass-"
-"mailer\n"
-"X-Generator: Poedit 1.5.5\n"
-"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Basepath: C:\\Programs Portable\\EasyPHP\\data\\localweb\\wordpress-"
+"incsub\\wp-content\\plugins\\mass-mailer\n"
+"X-Generator: Poedit 1.6.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: C:\\Programs Portable\\EasyPHP\\data\\localweb"
+"\\wordpress-incsub\\wp-content\\plugins\\mass-mailer\n"
 
-#: mass-mailer.php:32
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:32
 msgid ""
 "The Mass Email Sender plugin is only compatible with WordPress Multisite."
 msgstr ""
 
-#: mass-mailer.php:111
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:104
 msgid ""
 "We have problem finding your '/wp-admin/upgrade-functions.php' and '/wp-"
 "admin/includes/upgrade.php'"
 msgstr ""
 
-#: mass-mailer.php:208
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:201
 msgid "Test User"
 msgstr ""
 
-#: mass-mailer.php:227 mass-mailer.php:314
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:221
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:308
 msgid "Blog Provider"
 msgstr ""
 
-#: mass-mailer.php:232 mass-mailer.php:236 mass-mailer.php:358
-#: mass-mailer.php:390 mass-mailer.php:405 mass-mailer.php:433
-#: mass-mailer.php:466 mass-mailer.php:480 mass-mailer.php:485
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:226
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:230
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:352
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:384
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:399
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:427
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:456
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:470
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:475
 msgid "Send Email"
 msgstr ""
 
-#: mass-mailer.php:269 mass-mailer.php:273
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:263
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:267
 msgid "Receive admin emails"
 msgstr ""
 
-#: mass-mailer.php:277
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:271
 msgid "Yes"
 msgstr ""
 
-#: mass-mailer.php:278
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:272
 msgid "No"
 msgstr ""
 
-#: mass-mailer.php:301
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:295
 msgid ""
 "Dear USERNAME,\n"
 "\n"
@@ -73,11 +93,13 @@ msgid ""
 "emails'."
 msgstr ""
 
-#: mass-mailer.php:315
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:309
 msgid "Unsubscribed"
 msgstr ""
 
-#: mass-mailer.php:317
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:311
 #, php-format
 msgid ""
 "Hello %s, <br />You are now successfully <strong>unsubscribed</strong> from "
@@ -85,53 +107,69 @@ msgid ""
 "you to confirm this fact."
 msgstr ""
 
-#: mass-mailer.php:359
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:353
 #, php-format
 msgid "%s out of %s user(s) currently accepting emails."
 msgstr ""
 
-#: mass-mailer.php:362
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:356
 #, php-format
 msgid ""
 "Your last email still needs to be sent to %s user(s). Click <a "
 "href='%s'>here</a> to finish sending the email."
 msgstr ""
 
-#: mass-mailer.php:368 mass-mailer.php:441
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:362
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:435
 msgid "Sender Email:"
 msgstr ""
 
-#: mass-mailer.php:370 mass-mailer.php:444
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:364
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:437
 msgid "The address that will appear in the \"email from\" field."
 msgstr ""
 
-#: mass-mailer.php:373 mass-mailer.php:447
-msgid "Test Mail Recepient Email:"
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:367
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:440
+msgid "Test Mail Recipient Email:"
 msgstr ""
 
-#: mass-mailer.php:375 mass-mailer.php:450
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:369
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:442
 msgid ""
-"Test mail recepient's address, will be ingored when sending sending mails "
+"Test mail recipient's address, will be ignored when sending sending mails "
 "out."
 msgstr ""
 
-#: mass-mailer.php:378 mass-mailer.php:453
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:372
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:445
 msgid "Subject:"
 msgstr ""
 
-#: mass-mailer.php:380 mass-mailer.php:456
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:374
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:447
 msgid "This cannot be left blank."
 msgstr ""
 
-#: mass-mailer.php:383
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:377
 msgid "Content:"
 msgstr ""
 
-#: mass-mailer.php:384
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:378
 msgid ""
 "Dear USERNAME,\n"
 "\n"
-"Blah Blah Blah\n"
+"Email Content\n"
 "\n"
 "Thanks!\n"
 "\n"
@@ -142,56 +180,59 @@ msgid ""
 "To unsubscribe from admin emails please visit this address: UNSUBSCRIBE_URL"
 msgstr ""
 
-#: mass-mailer.php:385 mass-mailer.php:462
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:379
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:452
 msgid "Plain text only. No HTML allowed."
 msgstr ""
 
-#: mass-mailer.php:391 mass-mailer.php:467
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:385
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:457
 msgid "Reset"
 msgstr ""
 
-#: mass-mailer.php:392 mass-mailer.php:468
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:386
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:458
 msgid "Send Test Mail"
 msgstr ""
 
-#: mass-mailer.php:406
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:400
 msgid "Preparing to send emails... This could take a while. Please be patient!"
 msgstr ""
 
-#: mass-mailer.php:430
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:424
 msgid "You must fill in ALL required fields."
 msgstr ""
 
-#: mass-mailer.php:435
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:429
 #, php-format
 msgid ""
 "Send an email to blog owners. %s out of %s user(s) currently accepting "
 "emails."
 msgstr ""
 
-#: mass-mailer.php:459
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:450
 msgid "Email Content:"
 msgstr ""
 
-#: mass-mailer.php:481
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:471
 msgid "Finished!"
 msgstr ""
 
-#: mass-mailer.php:486
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:476
 #, php-format
 msgid "Sending emails... Roughly %s left to send."
 msgstr ""
 
-#: mass-mailer.php:509
+#: C:\Programs
+#: Portable\EasyPHP\data\localweb\wordpress-incsub\wp-content\plugins\mass-mailer/mass-mailer.php:499
 msgid "This plugin is only for sites with less than 2,500 users"
-msgstr ""
-
-#: mass-mailer.php:527
-msgid ""
-"Please install the latest version of <a href=\"http://premium.wpmudev.org/"
-"project/update-notifications/\" title=\"Download Now &raquo;\">our free "
-"Update Notifications plugin</a> which helps you stay up-to-date with the "
-"most stable, secure versions of WPMU DEV themes and plugins. <a href="
-"\"http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-"
-"information/\">More information &raquo;</a>"
 msgstr ""
