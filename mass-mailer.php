@@ -47,6 +47,11 @@ class Mass_Mailer {
 	function __construct() {
 		global $wp_version;
 
+		global $wpmudev_notices;
+		$wpmudev_notices[] = array( 'id'=> 7, 'name'=> 'Mass Email Sender', 'screens' => array( 'settings_page_mass-mailer-network' ) );
+
+		include_once('massmailerincludes/dash-notice/wpmudev-dash-notification.php');
+
 		add_action( 'admin_init', array( &$this, 'install' ) );
 		add_action( 'admin_init', array( &$this, 'upgrade' ) );
 		add_action( 'admin_init', array( &$this, 'user_install' ) );
@@ -504,5 +509,3 @@ class Mass_Mailer {
 }
 
 $mass_mailer = new Mass_Mailer();
-
-include_once('massmailerincludes/wpmudev-dash-notification.php');
